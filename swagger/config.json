@@ -30,5 +30,6 @@
       "CustomAuth": []
     }
   ],
-  "paths": {}
+  "paths": {},
+  "apis": ["../src/routes/*.js"]
 }
