@@ -12,10 +12,7 @@ const addNewQuestion = async (data) => {
 
 const getQuestionsByCondition = async (condition) => {
   try {
-    const result = await questions.aggregate([
-      { $match: condition },
-      { $sample: { size: 100 } },
-    ]);
+    const result = await questions.findOne(condition);
     return result;
   } catch (error) {
     throw new Error(error);

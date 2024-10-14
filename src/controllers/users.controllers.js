@@ -205,8 +205,6 @@ const submitAnswer = async (req, res) => {
       wrong_answers: wrongAnswer,
     };
 
-    console.log("answer ", SubmitResults);
-
     const submitAnswer = await results.addNewResult(SubmitResults);
 
     if (!submitAnswer) {

@@ -1,30 +1,32 @@
 const mongoose = require("mongoose");
 
-const answersSchema = new mongoose.Schema({
-  question_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "questions",
-    required: true,
+const answersSchema = new mongoose.Schema(
+  {
+    question_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "questions",
+      required: true,
+    },
+    user_answer: {
+      type: String,
+      required: true,
+    },
+    correct_answer: {
+      type: String,
+      required: true,
+    },
+    result: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
-  user_answer: {
-    type: String,
-    required: true,
-  }, 
-  correct_answer: {
-    type: String,
-    required: true,
-  },
-  result: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-},
-{
-    _id : false,
+  {
+    _id: false,
     timestamps: false,
     versionKey: false,
-  });
+  }
+);
 
 const resultsSchema = new mongoose.Schema(
   {
