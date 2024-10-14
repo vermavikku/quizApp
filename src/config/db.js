@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const uri = process.env.DB_URL;
+const uri =
+  "mongodb://admin:qS8O3hOGVIPzhwlG@SG-tarry-squash-5982-67667.servers.mongodirector.com:27017/admin";
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
