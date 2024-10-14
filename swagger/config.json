@@ -1,0 +1,34 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "QuizApp API's",
+    "version": "1.0.0",
+    "description": "QuizApp is an application where students can check there knowledge in a particular field by taking this quiz",
+    "contact": {
+      "name": "Vikas Verma",
+      "email": "vikas.verma@techplus.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://quiz-app-seven-beryl.vercel.app/v1",
+      "description": "Development server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "CustomAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Please Provide Valid Authorization Token"
+      }
+    }
+  },
+  "security": [
+    {
+      "CustomAuth": []
+    }
+  ],
+  "paths": {}
+}

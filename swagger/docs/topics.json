@@ -1,0 +1,104 @@
+{
+  "tags": [
+    {
+      "name": "topics",
+      "description": "Operations related to topics"
+    }
+  ],
+  "paths": {
+    "/topic": {
+      "post": {
+        "tags": ["topics"],
+        "summary": "Add new topics",
+        "responses": {
+          "201": {
+            "description": "Successfully created a new topic"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Duplicate Entry"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "topic_code": {
+                    "type": "string",
+                    "example": "T001"
+                  },
+                  "topic_name": {
+                    "type": "string",
+                    "example": "Introduction to Programming"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "A brief overview of programming concepts."
+                  }
+                },
+                "required": ["topic_code", "topic_name"]
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["topics"],
+        "summary": "Get all topics",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all topics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "topic_code": {
+                        "type": "string",
+                        "example": "T001"
+                      },
+                      "topic_name": {
+                        "type": "string",
+                        "example": "Introduction to Programming"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "A brief overview of programming concepts."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-14T10:00:00Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-14T10:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}

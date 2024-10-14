@@ -6,6 +6,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const router = require("./src/routes");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
+
 // Middleware
 
 const corsOptions = {
@@ -19,6 +22,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cors()); // enable CORS
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/v1", router);
 
 const port = process.env.PORT || 3000;

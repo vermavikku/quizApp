@@ -1,0 +1,432 @@
+{
+  "tags": [
+    {
+      "name": "users",
+      "description": "Operations related to users"
+    }
+  ],
+  "paths": {
+    "/users/topics": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Add user topics",
+        "responses": {
+          "201": {
+            "description": "Successfully created user topics"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Duplicate Entry"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "topics": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "T001"
+                    },
+                    "example": ["T001", "T002"]
+                  }
+                },
+                "required": ["topics"]
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["users"],
+        "summary": "Update user topics",
+        "responses": {
+          "200": {
+            "description": "Successfully updated user topics"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "User Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "topics": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "T001"
+                    },
+                    "example": ["T001", "T002"]
+                  }
+                },
+                "required": ["topics"]
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["users"],
+        "summary": "Get user topics",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved user topics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user_email": {
+                      "type": "string",
+                      "example": "alice@example.com"
+                    },
+                    "topics": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "T001"
+                      },
+                      "example": ["T001", "T002"]
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-10-14T10:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-10-14T10:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/check/{qid}": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Check answer for a question",
+        "parameters": [
+          {
+            "name": "qid",
+            "in": "path",
+            "required": true,
+            "description": "Question ID",
+            "schema": {
+              "type": "string",
+              "example": "605c72e4e4b0a92e1a0d4f47"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully checked answer"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/answer": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Submit answers",
+        "description": "Submits the user's answers to specific questions.",
+        "responses": {
+          "201": {
+            "description": "Successfully submitted answers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Answers submitted successfully."
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "question_id": {
+                            "type": "string",
+                            "example": "605c72e4e4b0a92e1a0d4f47"
+                          },
+                          "user_answer": {
+                            "type": "string",
+                            "example": "A"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid input data."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "An unexpected error occurred."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "question_id": {
+                      "type": "string",
+                      "example": "605c72e4e4b0a92e1a0d4f47"
+                    },
+                    "user_answer": {
+                      "type": "string",
+                      "example": "A"
+                    }
+                  },
+                  "required": ["question_id", "user_answer"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/result": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get result for a user",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved user result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user_email": {
+                      "type": "string",
+                      "example": "alice@example.com"
+                    },
+                    "final_answers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "question_id": {
+                            "type": "string",
+                            "example": "605c72e4e4b0a92e1a0d4f47"
+                          },
+                          "user_answer": {
+                            "type": "string",
+                            "example": "A"
+                          },
+                          "correct_answer": {
+                            "type": "string",
+                            "example": "A"
+                          },
+                          "result": {
+                            "type": "boolean",
+                            "example": true
+                          }
+                        }
+                      }
+                    },
+                    "attempted": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "correct_answers": {
+                      "type": "number",
+                      "example": 8
+                    },
+                    "wrong_answers": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-10-14T10:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-10-14T10:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Result Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["users"],
+        "summary": "Delete result by ID",
+        "responses": {
+          "200": {
+            "description": "Successfully deleted user result"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "User Result Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/all/result": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get all results",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "user_email": {
+                        "type": "string",
+                        "example": "alice@example.com"
+                      },
+                      "final_answers": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "question_id": {
+                              "type": "string",
+                              "example": "605c72e4e4b0a92e1a0d4f47"
+                            },
+                            "user_answer": {
+                              "type": "string",
+                              "example": "A"
+                            },
+                            "correct_answer": {
+                              "type": "string",
+                              "example": "A"
+                            },
+                            "result": {
+                              "type": "boolean",
+                              "example": true
+                            }
+                          }
+                        }
+                      },
+                      "attempted": {
+                        "type": "number",
+                        "example": 10
+                      },
+                      "correct_answers": {
+                        "type": "number",
+                        "example": 8
+                      },
+                      "wrong_answers": {
+                        "type": "number",
+                        "example": 2
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-14T10:00:00Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-14T10:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
