@@ -36,7 +36,7 @@ const addUsersTopicsInfo = async (req, res) => {
 
     const result = await userTopics.addUserTopic({
       ...data,
-      user_email:req.userData.email,
+      user_email: req.userData.email,
     });
 
     if (result) {
@@ -64,7 +64,7 @@ const addUsersTopicsInfo = async (req, res) => {
 const updateUsersTopicsInfo = async (req, res) => {
   try {
     const data = req.body;
-    
+
     if (Object.keys(data).length == 0) {
       return res
         .status(httpStatus.BAD_REQUEST)
@@ -162,7 +162,7 @@ const checkAnswer = async (req, res) => {
 
 const submitAnswer = async (req, res) => {
   try {
-    const userEmail =req.userData.email;
+    const userEmail = req.userData.email;
     const data = req.body;
 
     if (Object.keys(data).length == 0) {
@@ -203,7 +203,9 @@ const submitAnswer = async (req, res) => {
       attempted: finalResult.length,
       correct_answers: correctAnswer,
       wrong_answers: wrongAnswer,
-    };    
+    };
+
+    console.log("answer ", SubmitResults);
 
     const submitAnswer = await results.addNewResult(SubmitResults);
 
@@ -232,7 +234,7 @@ const submitAnswer = async (req, res) => {
 const getUsersTopics = async (req, res) => {
   try {
     const data = await userTopics.getUserTopicsByCondition({
-      user_email:req.userData.email,
+      user_email: req.userData.email,
     });
 
     return res.status(httpStatus.OK).json(data);
@@ -272,9 +274,7 @@ const getResult = async (req, res) => {
 const getAllResults = async (req, res) => {
   try {
     const data = await results.getAllResultsWithUser();
-    return res
-      .status(httpStatus.OK)
-      .json(data);
+    return res.status(httpStatus.OK).json(data);
   } catch (error) {
     console.log(error);
     return res
@@ -285,16 +285,14 @@ const getAllResults = async (req, res) => {
 const deleteResultById = async (req, res) => {
   try {
     const email = req.userData.email;
-    const condition = {user_email : email}
+    const condition = { user_email: email };
     const data = await results.deleteResult(condition);
-    if(!data){
+    if (!data) {
       return res
-      .status(httpStatus.BAD_REQUEST)
-      .json({Message : "unable to reset"});
+        .status(httpStatus.BAD_REQUEST)
+        .json({ Message: "unable to reset" });
     }
-    return res
-      .status(httpStatus.OK)
-      .json({Message : "Reset Successfully"});
+    return res.status(httpStatus.OK).json({ Message: "Reset Successfully" });
   } catch (error) {
     console.log(error);
     return res
@@ -311,5 +309,5 @@ module.exports = {
   getUsersTopics,
   getResult,
   getAllResults,
-  deleteResultById
+  deleteResultById,
 };
