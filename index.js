@@ -22,7 +22,11 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cors()); // enable CORS
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", (req, res, next) => {
+  console.log("Swagger UI route accessed");
+  next();
+}, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use("/v1", router);
 
 const port = process.env.PORT || 3000;
