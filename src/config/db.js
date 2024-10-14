@@ -1,32 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-// Load environment variables
-require('dotenv').config(); 
-
-// Connection URI
 const uri = process.env.DB_URL;
 
 mongoose.connect(uri, {
-  serverSelectionTimeoutMS: 5000, 
-})
-.then(() => {
-  console.log(`Connected to MongoDB at ${uri}`);
-})
-.catch((err) => {
-  console.error(`MongoDB connection error: ${err}`);
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: false, // Disable SSL if not needed
 });
 
-// Get the default connection
 const db = mongoose.connection;
 
-// Event listeners for connection events
-db.on('error', (err) => {
-  console.error(`MongoDB connection error: ${err}`);
+db.on("error", console.error.bind(console, "Connection error for DB"));
+db.once("open", function () {
+  console.log("Connected to db");
 });
 
-db.on('disconnected', () => {
-  console.log('Disconnected from MongoDB');
-});
-
-// Export the connection
 module.exports = db;
