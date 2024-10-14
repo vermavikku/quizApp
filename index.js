@@ -9,6 +9,7 @@ const router = require("./src/routes");
 // Middleware
 
 const corsOptions = {
+  origin: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "*",
   credentials: true,
