@@ -33,6 +33,11 @@ const options = {
   customSiteTitle: "The Words That I Know API - Swagger",
 };
 
+app.get("/public/css/swagger-ui.css", (req, res) => {
+  console.log("Serving CSS file...");
+  res.sendFile(path.join(__dirname, "public", "css", "swagger-ui.css"));
+});
+
 // Serve Swagger UI
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, options));
 
