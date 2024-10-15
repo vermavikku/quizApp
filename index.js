@@ -29,7 +29,7 @@ app.use("/public", express.static("public"));
 
 // Swagger UI options
 const options = {
-  customCssUrl: "/public/css/swagger-ui.css", // Use absolute path for serving CSS
+  customCssUrl: "/public/swagger-ui.css",
   customSiteTitle: "The Words That I Know API - Swagger",
 };
 
