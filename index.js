@@ -3,8 +3,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
-const swaggerSpec = require("./swagger");
-const router = require("./src/routes");
+const swaggerSpec = require("./swagger"); // Ensure this is correctly set up
 
 dotenv.config();
 
@@ -23,18 +22,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
-// Swagger UI options with CDN links
-const options = {
-  swaggerOptions: {
-    url: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-bundle.js", // CDN for JS
-    urlCss:
-      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui.css", // CDN for CSS
-  },
-  customSiteTitle: "The Words That I Know API - Swagger",
-};
+// Serve Swagger UI files
+app.use("/api-docs", express.static("public/api-docs"));
 
-// Serve Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, options));
+// Setup Swagger UI to use the local files
+app.get("/api-docs", (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <link rel="stylesheet" type="text/css" href="swagger-ui.css" />
+      </head>
+      <body>
+        <div id="swagger-ui"></div>
+        <script src="swagger-ui-bundle.js"></script>
+        <script>
+          const ui = SwaggerUIBundle({
+            url: '/swagger.json', // Adjust the path to your swagger.json
+            dom_id: '#swagger-ui',
+            presets: [
+              SwaggerUIBundle.presets.apis,
+              SwaggerUIStandalonePreset
+            ],
+            layout: "StandaloneLayout",
+          });
+        </script>
+      </body>
+    </html>
+  `);
+});
 
 // Route setup
 app.use("/v1", router);
