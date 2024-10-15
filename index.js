@@ -5,7 +5,6 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const router = require("./src/routes");
-const db = require("./src/config/db"); // Ensure your DB config is being used
 
 dotenv.config();
 
@@ -24,19 +23,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
-// Serve static files for Swagger UI
-app.use("/public", express.static("public"));
-
-// Swagger UI options
+// Swagger UI options with CDN links
 const options = {
-  customCssUrl: "/public/swagger-ui.css",
+  swaggerOptions: {
+    url: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-bundle.js", // CDN for JS
+    urlCss:
+      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui.css", // CDN for CSS
+  },
   customSiteTitle: "The Words That I Know API - Swagger",
 };
-
-app.get("/public/css/swagger-ui.css", (req, res) => {
-  console.log("Serving CSS file...");
-  res.sendFile(path.join(__dirname, "public", "css", "swagger-ui.css"));
-});
 
 // Serve Swagger UI
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, options));
